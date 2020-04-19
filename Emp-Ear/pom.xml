@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.amsidh</groupId>
+		<artifactId>Emp-Main</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>Emp-Ear</artifactId>
+	<packaging>ear</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<finalName>Emp-Ear</finalName>
+					<version>5</version>
+					 <defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+					 <earSourceDirectory>${basedir}/EarContent</earSourceDirectory>
+					 <includeLibInApplicationXml>true</includeLibInApplicationXml>
+					 <generateApplicationXml>true</generateApplicationXml>
+					 
+					<modules>
+						<webModule>
+							<groupId>com.amsidh</groupId>
+							<artifactId>Emp-Web</artifactId>
+							<uri>Emp-Web.war</uri>
+							<bundleFileName>Emp-Web.war</bundleFileName>
+							<contextRoot>/employee</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.amsidh</groupId>
+			<artifactId>Emp-Web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+</project>
