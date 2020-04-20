@@ -26,16 +26,16 @@ public class EmpApplication {
 		employee.setEmpName("Amsidh");
 		
 		empApplication.employeeService=(EmployeeService)context.getBean("employeeService");
-		empApplication.employeeService.removeEmployee(employee);
-		/*List<EmployeeDto> listOfEmpDtos = empApplication.employeeService
+		empApplication.employeeService.createEmployee(employee);
+		List<EmployeeDto> listOfEmpDtos = empApplication.employeeService
 				.getAllEmployee();
 		for (EmployeeDto emp : listOfEmpDtos) {
 			System.out.println(emp.getEmpId() + "   " + emp.getEmpName());
-		}*/
-		EmployeeDto ee=new EmployeeDto();
+		}
+		/*EmployeeDto ee=new EmployeeDto();
 		ee.setEmpName("Amsidh");
 		EmployeeDto emp=empApplication.employeeService.searchEmployee(ee);
-		System.out.println(emp.getEmpId()+"   :   "+emp.getEmailId());
+		System.out.println(emp.getEmpId()+"   :   "+emp.getEmailId());*/
 		
 
 	}
