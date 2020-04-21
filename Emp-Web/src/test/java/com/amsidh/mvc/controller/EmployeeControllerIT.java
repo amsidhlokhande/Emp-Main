@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(classes = SpringBootApp.class,
         webEnvironment = RANDOM_PORT)
+@ActiveProfiles("test")
 public class EmployeeControllerIT {
 
     @LocalServerPort
@@ -29,9 +31,9 @@ public class EmployeeControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Sql({"schema.sql", "data.sql"})
+    @Sql({"classpath:schema.sql", "classpath:data.sql"})
     @Test
-    public void whenGetAllPersonRequest_ThenSuccess() throws
+    public void testGetAllEmployee() throws
             IllegalStateException, IOException {
 
         ResponseEntity<EmployeeDto[]> response =
@@ -42,19 +44,17 @@ public class EmployeeControllerIT {
     }
 
     @Test
-    public void whenGetEmployeeByIdRequestString_ThenSuccess() throws
+    public void testSearchEmployeeById() throws
             IllegalStateException, IOException {
         ResponseEntity<EmployeeDto> response =
                 restTemplate.getForEntity("http://localhost:" + port + "/employees/1",
                         EmployeeDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody().getEmpId().equals("1"));
-        assertTrue(response.getBody().getEmpName().equals("Pune"));
     }
 
     @Test
-    public void testAddEmployee() {
-        EmployeeDto employee = new EmployeeDto(1, "Name", "Company", 12345789L, "emailid@gmail.com", "City1");
+    public void testCreateEmployee() {
+        EmployeeDto employee = new EmployeeDto(10, "Name", "Company", 12345789L, "emailid@gmail.com", "City1");
         ResponseEntity<String> responseEntity = this.restTemplate
                 .postForEntity("http://localhost:" + port + "/employees", employee, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
