@@ -17,7 +17,6 @@ public class EmployeeDto {
     private Integer empId;
     private String empName;
     private String companyName;
-    private Date joiningDate;
     private Long mobileNumber;
     private String emailId;
     private String address;
