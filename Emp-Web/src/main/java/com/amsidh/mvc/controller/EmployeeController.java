@@ -5,6 +5,7 @@ import com.amsidh.mvc.model.EmployeeDto;
 import com.amsidh.mvc.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,7 @@ public class EmployeeController {
 	@PostMapping(consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
 	public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
 		EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
-		return ResponseEntity.ok().body(createdEmployee);
+		return new ResponseEntity<EmployeeDto>(createdEmployee, HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/{employeeId}", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})

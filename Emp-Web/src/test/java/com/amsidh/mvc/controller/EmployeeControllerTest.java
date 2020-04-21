@@ -80,7 +80,7 @@ public class EmployeeControllerTest {
         when(employeeServiceImpl.createEmployee(any(EmployeeDto.class))).thenReturn(employeeDto);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        assertTrue(result.getResponse().getStatus() == 200);
+        assertTrue(result.getResponse().getStatus() == 201);
         assertNotNull(result.getResponse().getContentAsString());
 
     }
