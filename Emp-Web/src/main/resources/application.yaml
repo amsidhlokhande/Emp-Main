@@ -7,3 +7,7 @@ spring:
   main:
     banner-mode: console
     web-application-type: servlet
+  profiles:
+    active: "@spring.profiles.active@"
+
+

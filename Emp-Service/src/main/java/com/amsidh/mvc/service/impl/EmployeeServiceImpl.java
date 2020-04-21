@@ -42,7 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeeDom.setMobileNumber(employeeDto.getMobileNumber());
 			employeeDom.setEmailId(employeeDto.getEmailId());
 			employeeDom.setAddress(employeeDto.getAddress());
-			employeeDom.setJoiningDate(employeeDto.getJoiningDate());
 		}
 		employeeRepository.flush();
 		return EmployeeUtility.getEmployeeDto(employeeDom);
