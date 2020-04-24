@@ -14,9 +14,25 @@
     <packaging>pom</packaging>
     <name>Emp-Main</name>
 
+    <modules>
+        <module>Emp-Service</module>
+        <module>Emp-Web</module>
+    </modules>
+
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <coveralls.version>4.3.0</coveralls.version>
         <java.version>1.8</java.version>
+
+        <sonar.sources>/src/main</sonar.sources>
+        <sonar.java.libraries.empty>true</sonar.java.libraries.empty>
+        <sonar.java.libraries>target/**/*.jar</sonar.java.libraries>
+        <!--<sonar.tsql.file.suffixes>sql,tsql</sonar.tsql.file.suffixes>-->
+        <sonar.language>java,plsql</sonar.language>
+        <sonar.plsql.file.suffixes>sql</sonar.plsql.file.suffixes>
     </properties>
+
     <dependencyManagement>
         <dependencies>
 
@@ -34,7 +50,9 @@
 
         </dependencies>
     </dependencyManagement>
+
     <build>
+        <finalName>${project.name}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -45,7 +63,6 @@
                         <target>${java.version}</target>
                     </configuration>
                 </plugin>
-                <!-- Configuration of surefire plugin for both junit  and Integeration test execution in different phase-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -82,12 +99,41 @@
                         </execution>
                     </executions>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.7.0.1746</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.5</version>
+                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <id>pre-aggregate</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-aggregate</id>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
-    <modules>
-        <module>Emp-Service</module>
-        <module>Emp-Web</module>
-    </modules>
+
 </project>

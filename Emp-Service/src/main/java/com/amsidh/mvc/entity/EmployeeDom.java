@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @ToString
 public class EmployeeDom {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMPID")
     private Integer empId;
     @Column(name = "EMPNAME")
