@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /
+    application-display-name: EMP-MAIN
+  port: 8484
+spring:
+  main:
+    banner-mode: console
+    web-application-type: servlet
+  profiles:
+    active: "@spring.profiles.active@"
+
+

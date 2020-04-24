@@ -1,0 +1,70 @@
+spring:
+  datasource:
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+    generate-ddl: false
+
+
+#------------------H2 Profile-------------------------------
+---
+spring:
+  profiles: h2
+  datasource:
+    url: "jdbc:h2:~/employee_data_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS employee_data_db"
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+    path: /h2-console
+    settings:
+      web-allow-others: true
+      trace: true
+
+
+#------------------MySql Profile-------------------------------
+---
+spring:
+  profiles: mysql
+  datasource:
+    url: "jdbc:mysql://localhost:3306/employee_data_db?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8"
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  h2:
+    console:
+      enabled: false
+
+#------------------Test Profile-------------------------------
+---
+spring:
+  profiles: test
+  datasource:
+    url: "jdbc:h2:~/employee_data_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS employee_data_test"
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    initialization-mode: never
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
