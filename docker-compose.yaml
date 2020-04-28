@@ -1,0 +1,44 @@
+version: '3.7'
+#Define Services
+services:
+  docker-mysql:
+    image: mysql:5.7
+    # Expose the internal port to external so that it is accessible to other application/services
+    ports:
+      - "4000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: employee-db
+      MYSQL_USER: test-user
+      MYSQL_PASSWORD: password
+    networks:
+      - web-application-network
+    volumes:
+      - mysql-database-data-volume:/var/lib/mysql
+
+  emp-main:
+    #Dockerfile in Emp-Main will build the jar and provides the docker image with following name.
+    image: emp-main
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - docker-mysql
+    ports:
+      - "8484:8484"
+    environment:
+      CATALINA_OPTS: "-Dspring.profiles.active=mysql"
+      DATABASE_HOST: docker-mysql
+      DATABASE_USER: test-user
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: employee-db
+      DATABASE_PORT: 3306
+    networks:
+      - web-application-network
+# Volumes
+volumes:
+  mysql-database-data-volume:
+
+networks:
+  web-application-network:

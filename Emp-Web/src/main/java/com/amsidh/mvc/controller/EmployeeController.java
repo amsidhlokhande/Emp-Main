@@ -26,38 +26,38 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @AllArgsConstructor
 public class EmployeeController {
 
-	private EmployeeService employeeService;
+    private EmployeeService employeeService;
 
 
-	@GetMapping(produces = {APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<EmployeeDto>> getEmployees() {
-		return ResponseEntity.ok().body(employeeService.getAllEmployee());
-	}
+    @GetMapping(produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<EmployeeDto>> getEmployees() {
+        return ResponseEntity.ok().body(employeeService.getAllEmployee());
+    }
 
-	@GetMapping(value = "/{employeeId}", produces = {APPLICATION_JSON_VALUE})
-	public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("employeeId") Integer employeeId) {
+    @GetMapping(value = "/{employeeId}", produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("employeeId") Integer employeeId) {
 
-		EmployeeDto searchedEmployee = employeeService.searchEmployeeById(employeeId);
-		return ResponseEntity.ok().body(searchedEmployee);
-	}
+        EmployeeDto searchedEmployee = employeeService.searchEmployeeById(employeeId);
+        return ResponseEntity.ok().body(searchedEmployee);
+    }
 
-	@PostMapping(consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
-	public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
-		EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
-		return new ResponseEntity<EmployeeDto>(createdEmployee, HttpStatus.CREATED);
-	}
+    @PostMapping(consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
+        EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
+        return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
+    }
 
-	@PutMapping(value = "/{employeeId}", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
-	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody EmployeeDto employeeDto) {
+    @PutMapping(value = "/{employeeId}", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody EmployeeDto employeeDto) {
 
-		EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, employeeDto);
-		return ResponseEntity.ok().body(updatedEmployee);
-	}
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, employeeDto);
+        return ResponseEntity.ok().body(updatedEmployee);
+    }
 
-	@DeleteMapping(value = "/{employeeId}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
-		employeeService.removeEmployee(employeeId);
-		return ResponseEntity.ok().body("Employee Deleted successfully");
-	}
+    @DeleteMapping(value = "/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
+        employeeService.removeEmployee(employeeId);
+        return ResponseEntity.ok().body("Employee Deleted successfully");
+    }
 
 }
