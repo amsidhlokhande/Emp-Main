@@ -32,12 +32,12 @@ public class EmployeeServiceTest {
     private EmployeeService employeeService;
 
     @Before
-    public void setup(){
-     this.employeeService = new EmployeeServiceImpl(employeeRepository);
+    public void setup() {
+        this.employeeService = new EmployeeServiceImpl(employeeRepository);
     }
 
     @Test
-    public void testCreateEmployee(){
+    public void testCreateEmployee() {
         EmployeeDom employeeDom = getEmployeeDom();
         when(this.employeeRepository.save(any(EmployeeDom.class))).thenReturn(employeeDom);
 
@@ -46,7 +46,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testSearchEmployeeById(){
+    public void testSearchEmployeeById() {
 
         when(this.employeeRepository.findById(any(Integer.class))).thenReturn(of(getEmployeeDom()));
         EmployeeDto employee = this.employeeService.searchEmployeeById(123);
@@ -54,15 +54,15 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testRemoveEmployeeById(){
+    public void testRemoveEmployeeById() {
 
         doNothing().when(employeeRepository).deleteById(any(Integer.class));
-       this.employeeService.removeEmployee(123);
+        this.employeeService.removeEmployee(123);
         verify(employeeRepository, atLeastOnce()).deleteById(any(Integer.class));
     }
 
     @Test
-    public void testUpdateEmployee(){
+    public void testUpdateEmployee() {
 
         when(this.employeeRepository.findById(any(Integer.class))).thenReturn(of(getEmployeeDom()));
         doNothing().when(employeeRepository).flush();
@@ -74,7 +74,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testGetAllEmployee(){
+    public void testGetAllEmployee() {
 
         when(this.employeeRepository.findAll()).thenReturn(singletonList(getEmployeeDom()));
         List<EmployeeDto> allEmployee = this.employeeService.getAllEmployee();
