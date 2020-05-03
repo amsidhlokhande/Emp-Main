@@ -3,6 +3,8 @@ version: '3.7'
 services:
   docker-mysql:
     image: mysql:5.7
+    container_name: docker-mysql
+    restart: on-failure
     # Expose the internal port to external so that it is accessible to other application/services
     ports:
       - 3306:3306
@@ -18,13 +20,9 @@ services:
 
   emp-main:
     #Dockerfile in Emp-Main will build the jar and provides the docker image with following name.
-    image: emp-main
+    image: amsidhlokhande/emp-main:1.4
+    container_name: emp-main
     restart: on-failure
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - docker-mysql
     ports:
       - 8484:8484
     environment:
@@ -35,6 +33,8 @@ services:
       DATABASE_NAME: employee-db
       DATABASE_PORT: 3306
       WAIT_HOSTS: docker-mysql:3306
+    depends_on:
+      - docker-mysql
     networks:
       - web-application-network
 # Volumes
